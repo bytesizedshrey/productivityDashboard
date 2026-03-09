@@ -1,0 +1,87 @@
+/* colors */
+:root{
+    --pri:#41431B;
+    --sec:#AEB784;
+    --tri1:#E3DBBB;
+    --tri2:#F8F3E1;
+}
+
+/*aeonika*/
+@font-face {
+    font-family: aeonika;
+    font-weight: 400;
+    src: url('./Aeonika-BF66fcc5a8cc5db.otf');
+}
+/* susan */
+@font-face {
+    font-family: susan;
+    font-weight: 600;
+    src: url('./CSSusanDrawn-Regular_demo-BF69ae7f9003485.otf');
+    
+}
+/* wokley */
+@font-face {
+    font-family: wokley;
+    font-weight: 800;
+    src: url('./CSWokleyDrawn-Regular_demo-BF69ae812ae9ab6.otf');
+    
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: wokley;
+}
+html,body{
+    height: 100%;
+    width: 100%; 
+}
+#main{
+    width: 100%;
+    height: 100%;
+    /* background-color: var(--sec); */
+}
+nav{
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: var(--pri);
+}
+section.allElems{
+    display:flex;
+    gap:20px;
+    height: 100%;
+    width: 100%;
+    padding: 40px;
+    padding-top: 80px;
+    background-color: var(--sec);
+    flex-wrap:wrap;
+    align-items:flex-start;
+}
+.elem{
+    background-color: var(--tri1) ;
+    height:400px;
+    width:300px;
+    border-radius : 20px;
+    font-size:15px;
+    overflow : hidden;
+    position : relative;
+    transition : all ease 0.5s;
+}
+.elem img{
+    height: 100%;
+    width:100%;
+    object-fit: cover;
+}
+.elem h2{
+    position : absolute;
+    font-size : 30px;
+    font-weight: 300;
+    bottom : 4%;
+    right : 5%;
+
+}
+.elem:active{
+    scale : 0.97;
+}
