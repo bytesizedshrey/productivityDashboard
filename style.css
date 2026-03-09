@@ -54,14 +54,14 @@ section.allElems{
     height: 100%;
     width: 100%;
     padding: 40px;
-    padding-top: 80px;
+    padding-top: 90px;
     background-color: var(--sec);
     flex-wrap:wrap;
     align-items:flex-start;
 }
 .elem{
     background-color: var(--tri1) ;
-    height:400px;
+    height:200px;
     width:300px;
     border-radius : 20px;
     font-size:15px;
@@ -84,4 +84,14 @@ section.allElems{
 }
 .elem:active{
     scale : 0.97;
+}
+
+.fullElem{
+    height: 100%;
+    width:100%;
+    background-color:#AEB784;
+    padding:40px;
+    font-size:60px;
+    display:hidden;
+
 }
