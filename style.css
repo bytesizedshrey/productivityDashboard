@@ -1,97 +1,307 @@
-/* colors */
+/* =========================
+   COLOR VARIABLES (THEME)
+   ========================= */
 :root{
-    --pri:#41431B;
-    --sec:#AEB784;
-    --tri1:#E3DBBB;
-    --tri2:#F8F3E1;
+    --pri:#41431B;   /* primary dark olive (navbar / accents) */
+    --sec:#AEB784;   /* main background color */
+    --tri1:#E3DBBB;  /* card background */
+    --tri2:#F8F3E1;  /* lighter hover background */
 }
-
-/*aeonika*/
+/* =========================
+   CUSTOM FONTS
+   ========================= */
+/* Aeonika font */
 @font-face {
     font-family: aeonika;
     font-weight: 400;
     src: url('./Aeonika-BF66fcc5a8cc5db.otf');
 }
-/* susan */
+/* Susan handwritten style */
 @font-face {
     font-family: susan;
     font-weight: 600;
     src: url('./CSSusanDrawn-Regular_demo-BF69ae7f9003485.otf');
-    
 }
-/* wokley */
+/* Wokley font (main font used across UI) */
 @font-face {
     font-family: wokley;
     font-weight: 800;
     src: url('./CSWokleyDrawn-Regular_demo-BF69ae812ae9ab6.otf');
-    
 }
-
+/* =========================
+   GLOBAL RESET
+   ========================= */
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: wokley;
+    box-sizing: border-box;   /* prevents layout overflow */
+    font-family: wokley;      /* default font for whole site */
 }
+/* make page fill entire screen */
 html,body{
     height: 100%;
     width: 100%; 
 }
+/* =========================
+   MAIN APP CONTAINER
+   ========================= */
+
 #main{
     width: 100%;
     height: 100%;
-    /* background-color: var(--sec); */
 }
+/* =========================
+   NAVBAR (TOP BAR)
+   ========================= */
+
 nav{
-    position: fixed;
+    position: fixed;         /* stays at top when scrolling */
     width: 100%;
     height: 60px;
     background-color: var(--pri);
 }
+/* =========================
+   HOME SCREEN GRID
+   (cards like Todo, Planner)
+   ========================= */
 section.allElems{
-    display:flex;
-    gap:20px;
+    display:flex;            /* flex layout for cards */
+    gap:20px;                /* spacing between cards */
+
     height: 100%;
     width: 100%;
+
     padding: 40px;
-    padding-top: 90px;
+    padding-top: 90px;       /* leaves space for navbar */
+
     background-color: var(--sec);
-    flex-wrap:wrap;
+
+    flex-wrap:wrap;          /* allows cards to wrap to next row */
     align-items:flex-start;
+
+    position: absolute;
 }
+/* =========================
+   CARD STYLE
+   (.elem = each feature card)
+   ========================= */
 .elem{
-    background-color: var(--tri1) ;
+    background-color: var(--tri1);
     height:200px;
     width:300px;
+
     border-radius : 20px;
     font-size:15px;
-    overflow : hidden;
-    position : relative;
+
+    overflow : hidden;       /* hides image overflow */
+    position : relative;     /* required for absolute text positioning */
+
     transition : all ease 0.5s;
+
+    border: 1.5px solid rgba(65, 67, 27, 0.12);
+    cursor: pointer;
 }
+/* card hover animation */
+.elem:hover {
+    background-color: var(--tri2);
+    border-color: var(--sec);
+    box-shadow: 0 8px 24px rgba(65, 67, 27, 0.15);
+    transform: translateY(-4px);
+}
+/* pressed click effect */
+.elem:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(65, 67, 27, 0.1);
+}
+/* card background image */
 .elem img{
     height: 100%;
     width:100%;
-    object-fit: cover;
+    object-fit: cover;   /* image fills card properly */
 }
+/* card title text (Todo / Planner etc) */
 .elem h2{
     position : absolute;
     font-size : 30px;
     font-weight: 300;
+
     bottom : 4%;
     right : 5%;
-
 }
+/* small press animation */
 .elem:active{
     scale : 0.97;
 }
-
+/* =========================
+   FULL PAGE SECTIONS
+   (Todo page / Planner page)
+   ========================= */
 .fullElem{
     height: 100%;
     width:100%;
     background-color:#AEB784;
     padding:40px;
-    font-size:60px;
-    display:hidden;
+    /* font-size:60px; */
+    display:none;      /* hidden initially */
+    position: absolute;
+}
 
+/* =========================
+   CLOSE / BACK BUTTON
+   ========================= */
+.back{
+    position: absolute;
+    right: 5%;
+
+    padding: 10px 11px; 
+    background-color: var(--tri1);
+
+    border-radius: 7px;
+
+    font-size: 20px;
+    height: 30px;
+    width: 80px;
+
+    cursor: pointer;
+
+    /* smooth hover animation */
+    transition: background-color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.15s ease;
+}
+/* hover effect */
+.back:hover {
+    background-color: #c9bf9e;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+/* pressed click effect */
+.back:active {
+    background-color: #b5aa87;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(0px);
+}
+.todo-list-fullpage{
+    /* background-color: #41431B; */
+    display: block;
+    
+}
+.todo-list-fullpage h2{
+    font-size: 70px;
+    color: var(--pri);
+}
+.todo-list-fullpage .todo-container{
+    height: 70%;
+    width: 100%;
+    margin-top: 20px;
+    /* background-color: var(--pri); */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.todo-list-fullpage .todo-container .addTask{
+    width: 40%;
+    height: 100%;
+    background-color: var(--tri1);
+    border-radius: 20px;
+}
+.todo-list-fullpage .todo-container .addTask form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+.todo-container .addTask form input{
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 15px;
+    background-color: var(--tri2);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 11px;
+}
+.todo-container .addTask form textarea{
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 15px;
+    background-color: var(--tri2);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 11px;
+}
+.todo-container .addTask form button{
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 15px;
+    background-color: var(--sec);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+.todo-container .addTask form button:hover {
+    background-color: #9aa66e;        /* ~15% darker than #AEB784 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(174, 183, 132, 0.45);
+}
+
+.todo-container .addTask form button:active {
+    transform: translateY(0px);
+    box-shadow: none;
+    background-color: #8a9460;        /* even darker on click */
+}
+/* The Task itself is here now....tadaaaa */
+.todo-list-fullpage .todo-container .allTask{
+    width: 60%;
+    height: 100%;
+    background-color: var(--pri);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    overflow: auto;
+}
+.task{
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--tri1);
+    border-radius: 7px;
+    border: none;
+    padding: 20px 40px;
+    margin-bottom: 10px;
+}
+.task h5{
+    color: var(--pri);
+}
+.task button{
+    padding: 10px 20px;
+    width: 500px;
+    font-size: 15px;
+    background-color: var(--sec);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+.task button:hover {
+    background-color: #9aa66e;        /* ~15% darker than #AEB784 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(174, 183, 132, 0.45);
+}
+
+.task button:active {
+    transform: translateY(0px);
+    box-shadow: none;
+    background-color: #8a9460;        /* even darker on click */
 }
