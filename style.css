@@ -65,21 +65,24 @@ nav{
    (cards like Todo, Planner)
    ========================= */
 section.allElems{
-    display:flex;            /* flex layout for cards */
-    gap:20px;                /* spacing between cards */
+    display: grid;                      /* CSS grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* responsive grid */
+    gap: 24px;                          /* spacing between cards */
 
     height: 100%;
     width: 100%;
 
     padding: 40px;
-    padding-top: 90px;       /* leaves space for navbar */
+    padding-top: 90px;                  /* leaves space for navbar */
 
     background-color: var(--sec);
 
-    flex-wrap:wrap;          /* allows cards to wrap to next row */
-    align-items:flex-start;
+    align-items: stretch;               /* stretch cards to fill grid */
+    justify-items: stretch;
 
     position: absolute;
+    
+    overflow-y: auto;                   /* allow scrolling if needed */
 }
 /* =========================
    CARD STYLE
@@ -87,19 +90,21 @@ section.allElems{
    ========================= */
 .elem{
     background-color: var(--tri1);
-    height:200px;
-    width:300px;
+    aspect-ratio: 4 / 3;               /* maintain consistent card ratio */
 
-    border-radius : 20px;
-    font-size:15px;
+    border-radius: 20px;
+    font-size: 15px;
 
-    overflow : hidden;       /* hides image overflow */
-    position : relative;     /* required for absolute text positioning */
+    overflow: hidden;                   /* hides image overflow */
+    position: relative;                 /* required for absolute text positioning */
 
-    transition : all ease 0.5s;
+    transition: all ease 0.3s;
 
     border: 1.5px solid rgba(65, 67, 27, 0.12);
     cursor: pointer;
+    
+    display: flex;                      /* flexbox for better alignment */
+    align-items: flex-end;              /* align content to bottom */
 }
 /* card hover animation */
 .elem:hover {
@@ -181,11 +186,7 @@ section.allElems{
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     transform: translateY(0px);
 }
-.todo-list-fullpage{
-    /* background-color: #41431B; */
-    display: block;
-    
-}
+
 .todo-list-fullpage h2{
     font-size: 70px;
     color: var(--pri);
@@ -212,7 +213,7 @@ section.allElems{
     align-items: flex-start;
     padding: 20px;
 }
-.todo-container .addTask form input{
+.todo-container .addTask form input#task-input{
     padding: 10px 20px;
     width: 100%;
     font-size: 15px;
@@ -281,6 +282,18 @@ section.allElems{
 }
 .task h5{
     color: var(--pri);
+    display: flex;
+}
+.task h5 span{
+    color: red;
+    font-size: 10px;
+    align-items: center;
+}
+.task h5 span.true{
+  opacity: 1;
+}
+.task h5 span.false{
+  opacity: 0;
 }
 .task button{
     padding: 10px 20px;
@@ -299,9 +312,23 @@ section.allElems{
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(174, 183, 132, 0.45);
 }
-
 .task button:active {
     transform: translateY(0px);
     box-shadow: none;
     background-color: #8a9460;        /* even darker on click */
+}
+.mark-imp{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap:10px;
+    padding: 10px 0;
+    /* margin-bottom: 1px; */
+}
+.mark-imp input{
+    scale: 1.7;
+}
+.mark-imp label{
+     font-size: 13px;
 }
