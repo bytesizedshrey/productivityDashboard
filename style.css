@@ -381,18 +381,18 @@ section.allElems{
 }
 
 /* Motivation starts here */
-.motivation-fullpage{
+/* .motivation-fullpage{
     display: block;
     position: relative;
-}
+} */
 .motivation-fullpage .motivation-container{
     position: absolute;
     top:50%;
     left: 50%;
     border-radius: 50px;
     border: none;
-    height: 500px;
-    width: 80%;
+    height: 358px;
+    width: 70%;
     /* background-color: #41431B; */
     transform: translate(-50% ,-50%);
 } 
@@ -456,4 +456,64 @@ section.allElems{
     font-weight: 500;
     text-align: right;
     width: fit-content;
+}
+
+/* Pomodoro styles */
+.pomodoro-fullpage h2{
+    font-size: 70px;
+}
+.pomodoro-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 500px;
+    background-color: var(--tri1);
+    border-radius: 20px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.timer-display{
+    font-size: 80px;
+    margin-bottom: 30px;
+    color: var(--pri);
+}
+.controls{
+    display: flex;
+    gap: 20px;
+}
+.break-options .break-btn{
+    padding: 5px 6px;
+    margin-top: 10px;
+}
+.break-options #short-break-btn{
+    margin-top: 20px;
+    padding: 2px 19px;
+}
+.break-options #long-break-btn{
+    margin-top: 20px;
+    padding: 2px 20px;
+}
+.controls button{
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: var(--sec);
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+.controls button:hover{
+    background-color: #9aa66e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(174, 183, 132, 0.45);
+}
+.controls button:active{
+    transform: translateY(0px);
+    box-shadow: none;
+    background-color: #8a9460;
 }

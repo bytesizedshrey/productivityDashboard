@@ -122,3 +122,158 @@ if(currentView !== null){
     const pageIndex = parseInt(currentView)
     fullElemPage[pageIndex].style.display = 'block'
 }
+//motivationQuote
+function motivationQuote(){
+var motivationQuoteContent = document.querySelector('.motivation-2 h1')
+var motivationAuthor = document.querySelector('.motivation-3 h3')
+async function fetchQuote(){
+    let response = await fetch('https://api.quotable.io/random')
+    let data = await response.json()
+
+    motivationQuoteContent.innerHTML = data.content
+    motivationAuthor.innerHTML = data.author
+}
+fetchQuote()
+}
+motivationQuote()
+
+// Pomodoro timer logic with work sessions and breaks
+function pomodoroTimer(){
+    // Select DOM elements for the timer display and buttons
+    const display = document.querySelector('.timer-display');
+    const phaseDisplay = document.querySelector('.phase');
+    const sessionDisplay = document.querySelector('.session-count');
+    const startBtn = document.getElementById('pomodoro-start');
+    const pauseBtn = document.getElementById('pomodoro-pause');
+    const resetBtn = document.getElementById('pomodoro-reset');
+
+    // If elements aren't found (e.g., script runs before HTML loads), exit early
+    if (!display || !startBtn || !pauseBtn || !resetBtn || !phaseDisplay || !sessionDisplay) {
+        return;
+    }
+
+    // Timer variables
+    let interval = null; // Holds the setInterval ID
+    let currentPhase = 'work'; // Current phase: 'work', 'shortBreak', or 'longBreak'
+    let sessionCount = 1; // Tracks completed work sessions (resets after 4)
+    let remaining = 0; // Remaining seconds for current timer
+
+    // Durations in seconds (adjustable)
+    const workDuration = 25 * 60; // 25 minutes work session
+    const shortBreakDuration = 5 * 60; // 5 minutes short break
+    const longBreakDuration = 15 * 60; // 15 minutes long break (can be 15-30 minutes as per technique)
+
+    // Function to update the display with current time
+    function updateDisplay(){
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        display.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+    }
+
+    // Function to update phase and session displays
+    function updatePhaseDisplay(){
+        if (currentPhase === 'work') {
+            phaseDisplay.textContent = 'Work Session';
+            sessionDisplay.textContent = `Session ${sessionCount}`;
+        } else if (currentPhase === 'shortBreak') {
+            phaseDisplay.textContent = 'Short Break';
+            sessionDisplay.textContent = `Session ${sessionCount}`;
+        } else if (currentPhase === 'longBreak') {
+            phaseDisplay.textContent = 'Long Break';
+            sessionDisplay.textContent = `Session ${sessionCount}`;
+        }
+    }
+
+    // Function to set the next phase and duration
+    function setNextPhase(){
+        if (currentPhase === 'work') {
+            // After work, check if it's time for long break (every 4 sessions)
+            if (sessionCount % 4 === 0) {
+                currentPhase = 'longBreak';
+                remaining = longBreakDuration;
+            } else {
+                currentPhase = 'shortBreak';
+                remaining = shortBreakDuration;
+            }
+        } else {
+            // After any break, go back to work and increment session
+            currentPhase = 'work';
+            remaining = workDuration;
+            sessionCount++;
+            // Reset session count after 4 work sessions
+            if (sessionCount > 4) {
+                sessionCount = 1;
+            }
+        }
+        updatePhaseDisplay();
+        updateDisplay();
+    }
+
+    // Initialize to first work session
+    remaining = workDuration;
+    updatePhaseDisplay();
+    updateDisplay();
+
+    // Start the timer
+    function start(){
+        if (interval) return; // Prevent multiple intervals
+        interval = setInterval(() => {
+            if (remaining <= 0) {
+                clearInterval(interval);
+                interval = null;
+                alert("Time's up!"); // Notify user
+                setNextPhase(); // Move to next phase
+            } else {
+                remaining--;
+                updateDisplay();
+            }
+        }, 1000); // Update every second
+    }
+
+    // Pause the timer
+    function pause(){
+        if (interval) {
+            clearInterval(interval);
+            interval = null;
+        }
+    }
+
+    // Reset to beginning of cycle
+    function reset(){
+        pause();
+        currentPhase = 'work';
+        sessionCount = 1;
+        remaining = workDuration;
+        updatePhaseDisplay();
+        updateDisplay();
+    }
+
+    // Attach event listeners to buttons
+    startBtn.addEventListener('click', start);
+    pauseBtn.addEventListener('click', pause);
+    resetBtn.addEventListener('click', reset);
+
+    // Optional: Manual break buttons
+    const shortBreakBtn = document.getElementById('short-break-btn');
+    const longBreakBtn = document.getElementById('long-break-btn');
+    if (shortBreakBtn) {
+        shortBreakBtn.addEventListener('click', () => {
+            pause();
+            currentPhase = 'shortBreak';
+            remaining = shortBreakDuration;
+            updatePhaseDisplay();
+            updateDisplay();
+        });
+    }
+    if (longBreakBtn) {
+        longBreakBtn.addEventListener('click', () => {
+            pause();
+            currentPhase = 'longBreak';
+            remaining = longBreakDuration;
+            updatePhaseDisplay();
+            updateDisplay();
+        });
+    }
+}
+
+pomodoroTimer();
