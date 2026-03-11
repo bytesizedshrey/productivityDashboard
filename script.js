@@ -11,17 +11,22 @@ let fullElemPageBackButton = document.querySelectorAll('.fullElem .back')// sele
 // open the corresponding full page when a card is clicked
 allElems.forEach(function(elem){
     elem.addEventListener('click',function(){
-        fullElemPage[elem.id].style.display = 'block'
+        // Hide all pages first
+        fullElemPage.forEach(page => page.style.display = 'none')
+        // Show the clicked page
+        const pageIndex = parseInt(elem.id)
+        fullElemPage[pageIndex].style.display = 'block'
+        localStorage.setItem('currentView', elem.id)
     })
 })
 // attach click event to every back button
 fullElemPageBackButton.forEach(function(back){
     back.addEventListener('click',function(){
         fullElemPage[back.id].style.display = 'none'
+        localStorage.removeItem('currentView')
     })
 })
 }
-
 // Call the function to enable card opening
 openFeatures()
 function todoList(){
@@ -34,9 +39,9 @@ if(localStorage.getItem('currentTask')){
 }
 function renderTask(){
     // Get the container where all tasks will be displayed
-    var allTask = document.querySelector('.allTask')
+    let allTask = document.querySelector('.allTask')
     // Initialize an empty string to build HTML
-    var sum = ''
+    let sum = ''
     // Loop through each task in the currentTask array
     currentTask.forEach(function(elem){
         // Create HTML for each task with task name, importance indicator, and a button
@@ -80,3 +85,40 @@ form.addEventListener('submit',function(e){
 })
 }
 todoList()
+function dayPlanner(){
+    // DayPlanner
+var dayPlanData = JSON.parse(localStorage.getItem(`dayPlanData`)) || {}
+var dayPlanner = document.querySelector('.day-planner')
+var hours = Array.from({length:18},(_,idx)=>{return `${6+idx}:00 - ${7+idx}:00`})
+
+var wholeDaySum = ''
+//just for printing the time or hours.
+hours.forEach(function(elem,idx){
+    var savedData = dayPlanData[idx] || ''
+    wholeDaySum = wholeDaySum + `<div class="day-planner-time">
+            <p>${elem}</p>
+            <input id="${idx}" type="text" placeholder="..." value="${savedData}">
+        </div>`
+})
+
+dayPlanner.innerHTML = wholeDaySum
+
+// Now select the inputs after they've been added to the DOM
+var dayPlannerInput = document.querySelectorAll('.day-planner input')
+
+dayPlannerInput.forEach(function(elem){
+    elem.addEventListener('input',function(){
+        dayPlanData[elem.id] = elem.value
+        localStorage.setItem('dayPlanData', JSON.stringify(dayPlanData))
+    })
+})
+}
+dayPlanner()
+
+// Restore the last opened view on page refresh
+let currentView = localStorage.getItem('currentView')
+if(currentView !== null){
+    let fullElemPage = document.querySelectorAll('.fullElem')
+    const pageIndex = parseInt(currentView)
+    fullElemPage[pageIndex].style.display = 'block'
+}
