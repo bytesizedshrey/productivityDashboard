@@ -34,13 +34,17 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;   /* prevents layout overflow */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     font-family: wokley;      /* default font for whole site */
+    color: var(--pri);
+
 }
 /* make page fill entire screen */
 html,body{
     height: 100%;
     width: 100%; 
+    overflow: hidden;
 }
 /* =========================
    MAIN APP CONTAINER
@@ -49,6 +53,8 @@ html,body{
 #main{
     width: 100%;
     height: 100%;
+    padding-top: 100px;
+    background-color: var(--sec);
 }
 /* =========================
    NAVBAR (TOP BAR)
@@ -64,47 +70,72 @@ nav{
    HOME SCREEN GRID
    (cards like Todo, Planner)
    ========================= */
-section.allElems{
-    display: grid;                      /* CSS grid layout */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* responsive grid */
-    gap: 24px;                          /* spacing between cards */
-
+section.allElems {
     height: 100%;
     width: 100%;
-
     padding: 40px;
-    padding-top: 90px;                  /* leaves space for navbar */
-
-    background-color: var(--sec);
-
-    align-items: stretch;               /* stretch cards to fill grid */
-    justify-items: stretch;
-
+    overflow: auto;
     position: absolute;
-    
-    overflow-y: auto;                   /* allow scrolling if needed */
+
+}
+/* .allFeatures selector isn't used in markup; keep row flex in case it's added later */
+.allElems .allFeatures {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    /* gap: 20px; */
+}
+.allElems .header {
+    height: 300px;
+    width: 100%;
+    /* background-image: url('https://images.unsplash.com/photo-1488415032361-b7e238421f1b?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); */
+    background-size: cover;
+    background-position: center;
+    background-color: var(--tri1);
+    margin-bottom: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 50px;
+}
+.header .header1 h1{
+    font-size: 40px;
+    /* color: var(--tri2) */
+}
+.header .header1 h3{
+    font-size: 30px;
+    /* color: var(--tri2) */
+}
+.header .header2 h1{
+    font-size: 30px;
+    /* color: var(--tri2) */
+}
+.header .header2 h3{
+    font-size: 40px;
+    /* color: var(--tri2) */
 }
 /* =========================
    CARD STYLE
    (.elem = each feature card)
    ========================= */
 .elem{
+    flex: 0 0 260px;            /* fixed width cards */
+    aspect-ratio: 4 / 3;
+
     background-color: var(--tri1);
-    aspect-ratio: 4 / 3;               /* maintain consistent card ratio */
-
     border-radius: 20px;
-    font-size: 15px;
 
-    overflow: hidden;                   /* hides image overflow */
-    position: relative;                 /* required for absolute text positioning */
+    overflow: hidden;
+    position: relative;
 
-    transition: all ease 0.3s;
+    border: 1.5px solid rgba(65,67,27,0.12);
 
-    border: 1.5px solid rgba(65, 67, 27, 0.12);
-    cursor: pointer;
-    
-    display: flex;                      /* flexbox for better alignment */
-    align-items: flex-end;              /* align content to bottom */
+    display: flex;
+    align-items: flex-end;
+
+    transition: transform .25s ease, box-shadow .25s ease;
 }
 /* card hover animation */
 .elem:hover {
@@ -486,17 +517,32 @@ section.allElems{
     display: flex;
     gap: 20px;
 }
-.break-options .break-btn{
-    padding: 5px 6px;
-    margin-top: 10px;
-}
-.break-options #short-break-btn{
+.break-options{
+    display: flex;
+    gap: 20px;
     margin-top: 20px;
-    padding: 2px 19px;
 }
-.break-options #long-break-btn{
-    margin-top: 20px;
-    padding: 2px 20px;
+
+.break-options button{
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--sec);
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.break-options button:hover{
+    background-color: #9aa66e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(174, 183, 132, 0.45);
+}
+
+.break-options button:active{
+    transform: translateY(0px);
+    box-shadow: none;
+    background-color: #8a9460;
 }
 .controls button{
     padding: 10px 20px;

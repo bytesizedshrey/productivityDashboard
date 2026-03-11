@@ -275,5 +275,27 @@ function pomodoroTimer(){
         });
     }
 }
-
 pomodoroTimer();
+const apiKey = '1bda90a1dc3242308bb100426261103'
+let city = 'dubai'
+var data = null
+async function weatherAPICall(){
+    var response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city }`)
+    data = await response.json()
+    console.log(data.current.temp_c)
+}
+weatherAPICall()
+var header1Date = document.querySelector(`.header1 h1`) 
+
+function dateTime(){
+    const totaldayofWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    
+    var date = new Date()
+    var dayOfWeek = totaldayofWeek[date.getDay()]
+    var hours = date.getHours()
+    var minutes = date.getMinutes()
+
+    header1Date.innerHTML = `${dayOfWeek}, ${hours} : ${minutes}`
+}
+
+dateTime()
